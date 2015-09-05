@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Movie {
     private boolean isAdult;
     private String backdropPath;
+    private String posterPath;
     private ArrayList<Integer> genreIDs;
     private int id;
     private String language;
@@ -16,10 +17,11 @@ public class Movie {
     private double voteAvg;
     private int voteCnt;
 
-    public Movie(boolean isAdult, String backdropPath, ArrayList<Integer> genreIDs,
+    public Movie(boolean isAdult, String backdropPath, String posterPath, ArrayList<Integer> genreIDs,
                  int id, String language, String title, String overview, double voteAvg, int voteCnt) {
         this.isAdult = isAdult;
         this.backdropPath = backdropPath;
+        this.posterPath = posterPath;
         this.genreIDs = genreIDs;
         this.id = id;
         this.language = language;
@@ -99,5 +101,13 @@ public class Movie {
 
     public void setIsAdult(boolean isAdult) {
         this.isAdult = isAdult;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 }

@@ -42,7 +42,12 @@ public class MovieListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public boolean areAllItemsEnabled() {
+        return true;
+    }
+
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View row = convertView;
         ViewHolder holder;
 
