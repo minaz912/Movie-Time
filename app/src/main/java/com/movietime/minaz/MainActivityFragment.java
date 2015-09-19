@@ -31,7 +31,6 @@ public class MainActivityFragment extends Fragment {
 
     static String BASE_URL = "http://api.themoviedb.org/3/discover/movie";
     static String BASE_PIC_URL = "http://image.tmdb.org/t/p/w185";
-    static String params = "sort_by=popularity.desc&api_key=81513cb04a6f257d51c40a4b89653f13";
     GridView movieGridView;
 
     public MainActivityFragment() {
