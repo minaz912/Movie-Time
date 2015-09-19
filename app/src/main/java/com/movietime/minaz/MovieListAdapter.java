@@ -2,7 +2,9 @@ package com.movietime.minaz;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +25,7 @@ public class MovieListAdapter extends BaseAdapter {
         this.context = context;
         this.movieList = movieList;
         this.layoutResourceId = layoutResourceId;
-        Log.v("MOVIE LIST COUNT", String.valueOf(movieList.size()));
+        Log.v("Movie List Count", String.valueOf(movieList.size()));
     }
 
     @Override
@@ -62,10 +64,29 @@ public class MovieListAdapter extends BaseAdapter {
             holder = (ViewHolder) row.getTag();
         }
         Uri posterUri = Uri.parse(MainActivityFragment.BASE_PIC_URL).buildUpon()
-                .appendEncodedPath(getItem(position).getBackdropPath())
+                .appendEncodedPath(getItem(position).getPosterPath())
                 .build();
         Log.v("posterUri", posterUri.toString());
         Picasso.with(this.context).load(posterUri).fit().into(holder.movieImageView);
+        holder.movieImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Movie selectedMovie = getItem(position);
+//                Toast.makeText(context,
+//                        "Clicked movie with id " + selectedMovie.getID(),
+//                        Toast.LENGTH_SHORT)
+//                        .show();
+                Intent startDetailActivity = new Intent(context, DetailActivity.class);
+                Bundle movieInfo = new Bundle();
+                movieInfo.putInt("movie_id", selectedMovie.getID());
+                movieInfo.putString("movie_title", selectedMovie.getTitle());
+                movieInfo.putString("movie_backdrop_path", selectedMovie.getBackdropPath());
+                movieInfo.putString("movie_overview", selectedMovie.getOverview());
+//                startDetailActivity.putExtra("movie_id", selectedMovie.getID());
+                startDetailActivity.putExtras(movieInfo);
+                context.startActivity(startDetailActivity);
+            }
+        });
 
         return row;
     }
