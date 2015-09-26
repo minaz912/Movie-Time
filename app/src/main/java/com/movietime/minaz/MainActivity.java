@@ -1,5 +1,6 @@
 package com.movietime.minaz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent goToSettings = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(goToSettings);
             return true;
         }
 

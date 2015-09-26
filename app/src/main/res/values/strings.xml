@@ -4,4 +4,23 @@
     <string name="action_settings">Settings</string>
 
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string-array name="pref_sort_by_titles">
+        <item>Rating</item>
+        <item>Popularity</item>
+    </string-array>
+    <string-array name="pref_sort_by_values">
+        <item>vote_count</item>
+        <item>popularity</item>
+    </string-array>
+
+    <string name="pref_sort_by">Sort By</string>
+    <string name="pref_sort_by_key">sort_by</string>
+    <string name="pref_sort_by_default">popularity</string>
 </resources>

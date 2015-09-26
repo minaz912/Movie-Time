@@ -1,7 +1,9 @@
 package com.movietime.minaz;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,8 +52,14 @@ public class MainActivityFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+
+        String sortPreference = sharedPreferences.getString(
+                getString(R.string.pref_sort_by_key), getString(R.string.pref_sort_by_default));
+
         Uri movieListUri = Uri.parse(BASE_URL).buildUpon()
-                .appendQueryParameter("sort_by", "popularity.desc")
+                .appendQueryParameter("sort_by", sortPreference.concat(".desc"))
                 .appendQueryParameter("api_key", "81513cb04a6f257d51c40a4b89653f13")
                 .build();
 
