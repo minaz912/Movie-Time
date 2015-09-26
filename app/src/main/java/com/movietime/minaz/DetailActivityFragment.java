@@ -31,7 +31,6 @@ public class DetailActivityFragment extends Fragment {
         overview = (TextView) view.findViewById(R.id.movie_detail_overview);
         backdrop = (ImageView) view.findViewById(R.id.movie_detail_backdrop);
 
-//        int movieID = getActivity().getIntent().getIntExtra("movie_id", 0);
         Bundle movieInfo = getActivity().getIntent().getExtras();
         int movieID = movieInfo.getInt("movie_id", 0);
         String movieTitle = movieInfo.getString("movie_title");
