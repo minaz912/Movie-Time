@@ -63,7 +63,7 @@ public class MovieListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) row.getTag();
         }
-        Uri posterUri = Uri.parse(MainActivityFragment.BASE_PIC_URL).buildUpon()
+        Uri posterUri = Uri .parse(MainActivityFragment.BASE_PIC_URL).buildUpon()
                 .appendEncodedPath(getItem(position).getPosterPath())
                 .build();
         Log.v("posterUri", posterUri.toString());
@@ -72,10 +72,6 @@ public class MovieListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Movie selectedMovie = getItem(position);
-//                Toast.makeText(context,
-//                        "Clicked movie with id " + selectedMovie.getID(),
-//                        Toast.LENGTH_SHORT)
-//                        .show();
                 Intent startDetailActivity = new Intent(context, DetailActivity.class);
                 Bundle movieInfo = new Bundle();
                 movieInfo.putInt("movie_id", selectedMovie.getID());
