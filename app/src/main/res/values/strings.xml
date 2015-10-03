@@ -23,4 +23,6 @@
     <string name="pref_sort_by">Sort By</string>
     <string name="pref_sort_by_key">sort_by</string>
     <string name="pref_sort_by_default">popularity</string>
+    <string name="movie_detail_trailers_textview">Trailers:</string>
+    <string name="movie_detail_reviews_textview">Reviews:</string>
 </resources>

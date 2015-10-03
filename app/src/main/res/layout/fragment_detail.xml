@@ -7,7 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.movietime.minaz.DetailActivityFragment">
+        tools:context="com.movietime.minaz.DetailActivityFragment"
+        android:id="@+id/movie_detail_root_linearlayout">
 
         <TextView
             android:id="@+id/movie_detail_title"
@@ -82,5 +83,34 @@
             android:layout_margin="16dp"
             android:text="Synopsis goes here Synopsis goes here Synopsis goes here Synopsis goes here Synopsis goes here "
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/movie_detail_trailers_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/movie_detail_trailers_textview"
+            android:textSize="20sp"
+            android:layout_margin="16dp" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="16dp"
+            android:id="@+id/movie_detail_trailers_listview" />
+
+        <TextView
+            android:id="@+id/movie_detail_reviews_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/movie_detail_reviews_textview"
+            android:textSize="20sp"
+            android:layout_margin="16dp" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="16dp"
+            android:id="@+id/movie_detail_reviews_listview" />
+
     </LinearLayout>
 </ScrollView>
