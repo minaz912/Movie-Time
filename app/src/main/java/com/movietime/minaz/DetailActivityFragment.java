@@ -4,14 +4,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -48,14 +49,6 @@ public class DetailActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        title = (TextView) view.findViewById(R.id.movie_detail_title);
-        overview = (TextView) view.findViewById(R.id.movie_detail_overview);
-        backdrop = (ImageView) view.findViewById(R.id.movie_detail_backdrop);
-
-        root = (LinearLayout) view.findViewById(R.id.movie_detail_root_linearlayout);
-        final ListView trailerListView = (ListView) view.findViewById(R.id.movie_detail_trailers_listview);
-        final ListView reviewListView = (ListView) view.findViewById(R.id.movie_detail_reviews_listview);
-
         // if  fragment was started with arguments (in 2-pane view), get the movieInfo bundle from the arguments
         // otherwise, the fragment was inflated via the detail activity and we should get the bundle via the intent used to launch
         // the detail activity.
@@ -67,8 +60,16 @@ public class DetailActivityFragment extends Fragment {
         final String movieTitle = movieInfo.getString("movie_title", null);
         String movieOverview = movieInfo.getString("movie_overview", null);
         String movieBackdropPath = movieInfo.getString("movie_backdrop_path", null);
+
+        root = (LinearLayout) view.findViewById(R.id.movie_detail_root_linearlayout);
+
         if (movieID != 0) {
-            Toast.makeText(getActivity(), "Movie ID: " + movieID, Toast.LENGTH_LONG).show();
+            title = (TextView) view.findViewById(R.id.movie_detail_title);
+            overview = (TextView) view.findViewById(R.id.movie_detail_overview);
+            backdrop = (ImageView) view.findViewById(R.id.movie_detail_backdrop);
+
+            final ListView trailerListView = (ListView) view.findViewById(R.id.movie_detail_trailers_listview);
+            final ListView reviewListView = (ListView) view.findViewById(R.id.movie_detail_reviews_listview);
 
             title.setText(movieTitle);
             overview.setText(movieOverview);
@@ -111,10 +112,11 @@ public class DetailActivityFragment extends Fragment {
                                     trailerList.add(new Trailer(trailer.getString("id"), trailer.getString("name"),
                                             trailer.getString("key")));
                                 }
-                                TrailerListAdapter adapter = new TrailerListAdapter(getActivity(),
+                                TrailerListAdapter trailerListAdapter = new TrailerListAdapter(getActivity(),
                                         trailerList,
                                         R.layout.trailer_list_item);
-                                trailerListView.setAdapter(adapter);
+                                trailerListView.setAdapter(trailerListAdapter);
+                                setListViewHeightBasedOnItems(trailerListView, trailerListAdapter);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -146,10 +148,11 @@ public class DetailActivityFragment extends Fragment {
                                             review.getString("author"),
                                             review.getString("content")));
                                 }
-                                ReviewListAdapter adapter = new ReviewListAdapter(getActivity(),
+                                ReviewListAdapter reviewListAdapter = new ReviewListAdapter(getActivity(),
                                         reviewList,
                                         R.layout.review_list_item);
-                                reviewListView.setAdapter(adapter);
+                                reviewListView.setAdapter(reviewListAdapter);
+                                setListViewHeightBasedOnItems(reviewListView, reviewListAdapter);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -166,7 +169,13 @@ public class DetailActivityFragment extends Fragment {
             requestQueue.add(reviewRequest);
 
         } else {
-            Toast.makeText(getActivity(), "Invalid movie ID", Toast.LENGTH_LONG).show();
+            TextView noMovieSelectedTextView = new TextView(getContext());
+            noMovieSelectedTextView.setText(getString(R.string.movie_detail_no_movie_selected));
+            noMovieSelectedTextView.setTextSize(40);
+            noMovieSelectedTextView.setGravity(Gravity.CENTER);
+            root.removeAllViews();
+            root.setGravity(Gravity.CENTER);
+            root.addView(noMovieSelectedTextView);
         }
 
         return view;
@@ -174,6 +183,45 @@ public class DetailActivityFragment extends Fragment {
 
     public interface Callback {
         public void onItemSelected(Bundle bundle);
+    }
+
+
+    /**
+     * Sets ListView height dynamically based on the height of the items.
+     *
+     * @param listView to be resized
+     * @return true if the listView is successfully resized, false otherwise
+     */
+    public static boolean setListViewHeightBasedOnItems(ListView listView, ListAdapter adapter) {
+
+        if (adapter != null) {
+
+            int numberOfItems = adapter.getCount();
+
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = adapter.getView(itemPos, null, listView);
+                item.measure(0, 0);
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalItemsHeight + totalDividersHeight;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+
+            return true;
+
+        } else {
+            return false;
+        }
+
     }
 }
 
