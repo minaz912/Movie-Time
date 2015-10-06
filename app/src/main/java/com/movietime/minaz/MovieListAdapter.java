@@ -2,7 +2,6 @@ package com.movietime.minaz;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -72,15 +71,15 @@ public class MovieListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Movie selectedMovie = getItem(position);
-                Intent startDetailActivity = new Intent(context, DetailActivity.class);
+//                Intent startDetailActivity = new Intent(context, DetailActivity.class);
                 Bundle movieInfo = new Bundle();
                 movieInfo.putInt("movie_id", selectedMovie.getID());
                 movieInfo.putString("movie_title", selectedMovie.getTitle());
                 movieInfo.putString("movie_backdrop_path", selectedMovie.getBackdropPath());
                 movieInfo.putString("movie_overview", selectedMovie.getOverview());
 //                startDetailActivity.putExtra("movie_id", selectedMovie.getID());
-                startDetailActivity.putExtras(movieInfo);
-                context.startActivity(startDetailActivity);
+//                startDetailActivity.putExtras(movieInfo);
+                ((MainActivity) context).onItemSelected(movieInfo);
             }
         });
 

@@ -56,11 +56,17 @@ public class DetailActivityFragment extends Fragment {
         final ListView trailerListView = (ListView) view.findViewById(R.id.movie_detail_trailers_listview);
         final ListView reviewListView = (ListView) view.findViewById(R.id.movie_detail_reviews_listview);
 
-        Bundle movieInfo = getActivity().getIntent().getExtras();
+        // if  fragment was started with arguments (in 2-pane view), get the movieInfo bundle from the arguments
+        // otherwise, the fragment was inflated via the detail activity and we should get the bundle via the intent used to launch
+        // the detail activity.
+        Bundle movieInfo = getArguments();
+        if (movieInfo == null) {
+            movieInfo = getActivity().getIntent().getExtras();
+        }
         int movieID = movieInfo.getInt("movie_id", 0);
-        final String movieTitle = movieInfo.getString("movie_title");
-        String movieOverview = movieInfo.getString("movie_overview");
-        String movieBackdropPath = movieInfo.getString("movie_backdrop_path");
+        final String movieTitle = movieInfo.getString("movie_title", null);
+        String movieOverview = movieInfo.getString("movie_overview", null);
+        String movieBackdropPath = movieInfo.getString("movie_backdrop_path", null);
         if (movieID != 0) {
             Toast.makeText(getActivity(), "Movie ID: " + movieID, Toast.LENGTH_LONG).show();
 
@@ -164,6 +170,10 @@ public class DetailActivityFragment extends Fragment {
         }
 
         return view;
+    }
+
+    public interface Callback {
+        public void onItemSelected(Bundle bundle);
     }
 }
 

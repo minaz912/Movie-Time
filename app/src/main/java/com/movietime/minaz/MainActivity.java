@@ -6,12 +6,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DetailActivityFragment.Callback {
+
+    private static final String DETAILFRAGMENT_TAG = "DFTAG";
+    private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (findViewById(R.id.detail_fragment_container) != null) {
+            mTwoPane = true;
+            if (savedInstanceState == null) {
+                DetailActivityFragment fragment = new DetailActivityFragment();
+                Bundle args = new Bundle();
+                args.putInt("movie_id", 0);
+                fragment.setArguments(args);
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.detail_fragment_container, fragment, DETAILFRAGMENT_TAG)
+                        .commit();
+            }
+        }
     }
 
 
@@ -37,5 +52,26 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemSelected(Bundle bundle) {
+        if (mTwoPane) {
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            Bundle args = bundle;
+
+            DetailActivityFragment fragment = new DetailActivityFragment();
+            fragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.detail_fragment_container, fragment, DETAILFRAGMENT_TAG)
+                    .commit();
+        } else {
+            Intent startDetailActivityIntent = new Intent(this, DetailActivity.class);
+            startDetailActivityIntent.putExtras(bundle);
+            startActivity(startDetailActivityIntent);
+        }
     }
 }
