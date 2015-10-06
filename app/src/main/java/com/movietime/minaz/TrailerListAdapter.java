@@ -65,7 +65,7 @@ public class TrailerListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent viewTrailer = new Intent(Intent.ACTION_VIEW);
-                String youtubeUrl = YOUTUBE_BASE_URL.concat(String.valueOf(trailer.getId()));
+                String youtubeUrl = YOUTUBE_BASE_URL.concat(String.valueOf(trailer.getKey()));
                 viewTrailer.setData(Uri.parse(youtubeUrl));
                 context.startActivity(viewTrailer);
             }
