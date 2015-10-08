@@ -152,7 +152,6 @@ public class DetailActivityFragment extends Fragment {
                                         reviewList,
                                         R.layout.review_list_item);
                                 reviewListView.setAdapter(reviewListAdapter);
-                                setListViewHeightBasedOnItems(reviewListView, reviewListAdapter);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
