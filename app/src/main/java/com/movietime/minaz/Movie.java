@@ -2,9 +2,7 @@ package com.movietime.minaz;
 
 import java.util.ArrayList;
 
-/**
- * Created by minaz on 01/09/15.
- */
+
 public class Movie {
     private boolean isAdult;
     private String backdropPath;
@@ -14,11 +12,13 @@ public class Movie {
     private String language;
     private String title;
     private String overview;
-    private double voteAvg;
+    private float voteAvg;
     private int voteCnt;
 
+    public Movie() {}
+
     public Movie(boolean isAdult, String backdropPath, String posterPath, ArrayList<Integer> genreIDs,
-                 int id, String language, String title, String overview, double voteAvg, int voteCnt) {
+                 int id, String language, String title, String overview, float voteAvg, int voteCnt) {
         this.isAdult = isAdult;
         this.backdropPath = backdropPath;
         this.posterPath = posterPath;
