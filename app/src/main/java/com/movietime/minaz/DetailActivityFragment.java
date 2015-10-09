@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -39,9 +40,21 @@ public class DetailActivityFragment extends Fragment {
     TextView title;
     TextView overview;
     ImageView backdrop;
+    Button markFavorite;
     LinearLayout root;
+    Boolean isFavorite;
+
+    MovieDataSource movieDataSource;
+
 
     public DetailActivityFragment() {
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        movieDataSource = new MovieDataSource(getActivity());
     }
 
     @Override
@@ -56,10 +69,14 @@ public class DetailActivityFragment extends Fragment {
         if (movieInfo == null) {
             movieInfo = getActivity().getIntent().getExtras();
         }
-        int movieID = movieInfo.getInt("movie_id", 0);
+        final int movieID = movieInfo.getInt("movie_id", 0);
         final String movieTitle = movieInfo.getString("movie_title", null);
-        String movieOverview = movieInfo.getString("movie_overview", null);
-        String movieBackdropPath = movieInfo.getString("movie_backdrop_path", null);
+        final String movieOverview = movieInfo.getString("movie_overview", null);
+        final String movieBackdropPath = movieInfo.getString("movie_backdrop_path", null);
+        final String moviePosterPath = movieInfo.getString("movie_poster_path", null);
+        final int movieVoteCnt = movieInfo.getInt("movie_vote_cnt", 0);
+        final float movieVoteAvg = movieInfo.getFloat("movie_vote_avg", 5);
+
 
         root = (LinearLayout) view.findViewById(R.id.movie_detail_root_linearlayout);
 
@@ -73,6 +90,49 @@ public class DetailActivityFragment extends Fragment {
 
             title.setText(movieTitle);
             overview.setText(movieOverview);
+
+            markFavorite = (Button) view.findViewById(R.id.movie_detail_mark_favorite);
+            movieDataSource.openReadable();
+            Movie favoriteMovie = movieDataSource.getMovieByApiId(movieID);
+            movieDataSource.close();
+            if (favoriteMovie != null) {
+                isFavorite = true;
+                markFavorite.setText(getString(R.string.movie_detail_remove_from_favorites,
+                        "REMOVE FROM FAVORITES"));
+            } else {
+                isFavorite = false;
+                markFavorite.setText(getString(R.string.movie_detail_set_as_favorite,
+                        "SET AS FAVORITE"));
+            }
+
+            markFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Movie movieDetails = new Movie();
+                    movieDetails.setBackdropPath(movieBackdropPath);
+                    movieDetails.setPosterPath(moviePosterPath);
+                    movieDetails.setID(movieID);
+                    movieDetails.setVoteCnt(movieVoteCnt);
+                    movieDetails.setVoteAvg(movieVoteAvg);
+                    movieDetails.setOverview(movieOverview);
+                    movieDetails.setTitle(movieTitle);
+
+                    movieDataSource.open();
+                    if (isFavorite) {
+                        movieDataSource.deleteMovie(movieDetails.getID());
+                        markFavorite.setText(getString(R.string.movie_detail_set_as_favorite,
+                                "SET AS FAVORITE"));
+                    } else {
+                        movieDataSource.createMovie(movieDetails);
+                        markFavorite.setText(getString(R.string.movie_detail_remove_from_favorites,
+                                "REMOVE FROM FAVORITES"));
+                    }
+                    movieDataSource.close();
+                    isFavorite = !isFavorite;
+
+                }
+            });
+
 
             String absBackdropPath = MainActivityFragment.BASE_PIC_URL + movieBackdropPath;
             Picasso.with(getActivity()).load(absBackdropPath).fit().into(backdrop);
@@ -181,7 +241,7 @@ public class DetailActivityFragment extends Fragment {
     }
 
     public interface Callback {
-        public void onItemSelected(Bundle bundle);
+        void onItemSelected(Bundle bundle);
     }
 
 
