@@ -34,6 +34,7 @@ public class MainActivityFragment extends Fragment {
     static String BASE_URL = "http://api.themoviedb.org/3/discover/movie";
     static String BASE_PIC_URL = "http://image.tmdb.org/t/p/w185";
     GridView movieGridView;
+    MovieDataSource movieDataSource;
 
     public MainActivityFragment() {
 
@@ -55,41 +56,53 @@ public class MainActivityFragment extends Fragment {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
 
-        String sortPreference = sharedPreferences.getString(
-                getString(R.string.pref_sort_by_key), getString(R.string.pref_sort_by_default));
+        boolean showFavsOnly = sharedPreferences.getBoolean(getString(R.string.pref_show_fav), false);
 
-        Uri movieListUri = Uri.parse(BASE_URL).buildUpon()
-                .appendQueryParameter("sort_by", sortPreference.concat(".desc"))
-                .appendQueryParameter("api_key", "81513cb04a6f257d51c40a4b89653f13")
-                .build();
+        if (! showFavsOnly) {
+            String sortPreference = sharedPreferences.getString(
+                    getString(R.string.pref_sort_by_key), getString(R.string.pref_sort_by_default));
 
-        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024 * 10);
-        Network network = new BasicNetwork(new HurlStack());
+            Uri movieListUri = Uri.parse(BASE_URL).buildUpon()
+                    .appendQueryParameter("sort_by", sortPreference.concat(".desc"))
+                    .appendQueryParameter("api_key", "81513cb04a6f257d51c40a4b89653f13")
+                    .build();
 
-        RequestQueue mRequestQueue = new RequestQueue(cache, network);
-        mRequestQueue.start();
+            Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024 * 10);
+            Network network = new BasicNetwork(new HurlStack());
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, movieListUri.toString(), (String) null, new Response.Listener<JSONObject>() {
+            RequestQueue mRequestQueue = new RequestQueue(cache, network);
+            mRequestQueue.start();
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.v("RESPONSE", response.toString());
-                        ArrayList<Movie> movies = parseJsonResponse(response);
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                    (Request.Method.GET, movieListUri.toString(), (String) null, new Response.Listener<JSONObject>() {
 
-                        MovieListAdapter adapter = new MovieListAdapter(getActivity(), movies,
-                                R.layout.movie_list_item);
-                        movieGridView.setAdapter(adapter);
-                    }
-                }, new Response.ErrorListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.v("RESPONSE", response.toString());
+                            ArrayList<Movie> movies = parseJsonResponse(response);
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.v("RESPONSE", error.toString());
-                    }
-                });
+                            MovieListAdapter adapter = new MovieListAdapter(getActivity(), movies,
+                                    R.layout.movie_list_item);
+                            movieGridView.setAdapter(adapter);
+                        }
+                    }, new Response.ErrorListener() {
 
-        mRequestQueue.add(jsObjRequest);
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.v("RESPONSE", error.toString());
+                        }
+                    });
+
+            mRequestQueue.add(jsObjRequest);
+        } else {
+            movieDataSource = new MovieDataSource(getActivity());
+            movieDataSource.openReadable();
+            ArrayList<Movie> movies = movieDataSource.getAllMovies();
+            MovieListAdapter adapter = new MovieListAdapter(getActivity(), movies,
+                    R.layout.movie_list_item);
+            movieGridView.setAdapter(adapter);
+
+        }
     }
 
     private ArrayList<Movie> parseJsonResponse(JSONObject response) {
@@ -103,7 +116,7 @@ public class MainActivityFragment extends Fragment {
                         movieJson.getString("backdrop_path"), movieJson.getString("poster_path"),
                         null, movieJson.getInt("id"), movieJson.getString("original_language"),
                         movieJson.getString("title"), movieJson.getString("overview"),
-                        movieJson.getDouble("vote_average"), movieJson.getInt("vote_count"));
+                        (float) movieJson.getDouble("vote_average"), movieJson.getInt("vote_count"));
                 // convert genre_ids to integer array
                 JSONArray genreIDsJsonArray = movieJson.getJSONArray("genre_ids");
                 for (int j = 0; j < genreIDsJsonArray.length(); j++) {
