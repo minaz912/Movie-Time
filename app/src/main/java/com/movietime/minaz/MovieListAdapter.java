@@ -71,14 +71,16 @@ public class MovieListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Movie selectedMovie = getItem(position);
-//                Intent startDetailActivity = new Intent(context, DetailActivity.class);
+
                 Bundle movieInfo = new Bundle();
                 movieInfo.putInt("movie_id", selectedMovie.getID());
                 movieInfo.putString("movie_title", selectedMovie.getTitle());
                 movieInfo.putString("movie_backdrop_path", selectedMovie.getBackdropPath());
                 movieInfo.putString("movie_overview", selectedMovie.getOverview());
-//                startDetailActivity.putExtra("movie_id", selectedMovie.getID());
-//                startDetailActivity.putExtras(movieInfo);
+                movieInfo.putString("movie_poster_path", selectedMovie.getPosterPath());
+                movieInfo.putFloat("movie_vote_avg", (float) selectedMovie.getVoteAvg());
+                movieInfo.putInt("movie_vote_cnt", selectedMovie.getVoteCnt());
+
                 ((MainActivity) context).onItemSelected(movieInfo);
             }
         });
