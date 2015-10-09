@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements DetailActivityFra
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+
     public void onItemSelected(Bundle bundle) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
