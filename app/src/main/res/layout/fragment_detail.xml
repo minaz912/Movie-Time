@@ -4,13 +4,14 @@
     android:id="@+id/movie_detail_root_scrollview"
     android:fillViewport="true">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context="com.movietime.minaz.DetailActivityFragment"
-        android:id="@+id/movie_detail_root_linearlayout">
+        android:id="@+id/movie_detail_root_linearlayout"
+        android:descendantFocusability="beforeDescendants"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <TextView
             android:id="@+id/movie_detail_title"
@@ -21,7 +22,8 @@
             android:padding="20dp"
             android:text="Title"
             android:textColor="#FFFFFF"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:focusable="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
