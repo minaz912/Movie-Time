@@ -3,11 +3,11 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="horizontal" android:padding="20dp">
 
-    <ImageButton
+    <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="fitXY"
-        android:id="@+id/movie_trailer_image_button"
+        android:id="@+id/movie_trailer_imageview"
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_play_arrow_black" />
 
