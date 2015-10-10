@@ -30,4 +30,5 @@
     <string name="movie_detail_remove_from_favorites">REMOVE FROM FAVORITES</string>
     <string name="pref_show_fav_title">Only show favorite movies</string>
     <string name="pref_show_fav_key">show_fav</string>
+    <string name="movie_detail_no_reviews">There are no reviews yet for this movie..</string>
 </resources>

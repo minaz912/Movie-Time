@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="Synopsis goes here Synopsis goes here Synopsis goes here Synopsis goes here Synopsis goes here "
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/movie_detail_trailers_textview"
@@ -113,6 +113,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/movie_detail_reviews_listview" />
+
+        <TextView
+            android:id="@+id/movie_detail_no_reviews_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textSize="15sp"
+            android:text="@string/movie_detail_no_reviews"
+            android:visibility="gone"
+            android:layout_margin="10dp" />
 
     </LinearLayout>
 

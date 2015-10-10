@@ -60,7 +60,7 @@ public class DetailActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detail, container, false);
+        final View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
         // if  fragment was started with arguments (in 2-pane view), get the movieInfo bundle from the arguments
         // otherwise, the fragment was inflated via the detail activity and we should get the bundle via the intent used to launch
@@ -208,10 +208,16 @@ public class DetailActivityFragment extends Fragment {
                                             review.getString("author"),
                                             review.getString("content")));
                                 }
-                                ReviewListAdapter reviewListAdapter = new ReviewListAdapter(getActivity(),
-                                        reviewList,
-                                        R.layout.review_list_item);
-                                reviewListView.setAdapter(reviewListAdapter);
+
+                                if (reviewList.size() > 0) {
+                                    ReviewListAdapter reviewListAdapter = new ReviewListAdapter(getActivity(),
+                                            reviewList,
+                                            R.layout.review_list_item);
+                                    reviewListView.setAdapter(reviewListAdapter);
+                                } else {
+                                    TextView noReviewsTextView = (TextView) view.findViewById(R.id.movie_detail_no_reviews_textview);
+                                    noReviewsTextView.setVisibility(View.VISIBLE);
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
