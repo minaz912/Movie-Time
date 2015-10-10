@@ -1,7 +1,6 @@
 package com.movietime.minaz;
 
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -31,11 +30,6 @@ import java.util.ArrayList;
 
 public class MainActivityFragment extends Fragment {
 
-    //TODO: PUT YOUR API KEY HERE
-    public static final String API_KEY = "XXXXXXXX";
-    //
-    static String BASE_URL = "http://api.themoviedb.org/3/discover/movie";
-    static String BASE_PIC_URL = "http://image.tmdb.org/t/p/w185";
     GridView movieGridView;
     MovieDataSource movieDataSource;
 
@@ -65,11 +59,6 @@ public class MainActivityFragment extends Fragment {
             String sortPreference = sharedPreferences.getString(
                     getString(R.string.pref_sort_by_key), getString(R.string.pref_sort_by_default));
 
-            Uri movieListUri = Uri.parse(BASE_URL).buildUpon()
-                    .appendQueryParameter("sort_by", sortPreference.concat(".desc"))
-                    .appendQueryParameter("api_key", API_KEY)
-                    .build();
-
             Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024 * 10);
             Network network = new BasicNetwork(new HurlStack());
 
@@ -81,7 +70,7 @@ public class MainActivityFragment extends Fragment {
                     R.layout.movie_list_item);
 
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.GET, buildMovieUri(1, sortPreference).toString(),
+                    (Request.Method.GET, Utils.buildMovieUri(1, sortPreference).toString(),
                             (String) null, new Response.Listener<JSONObject>() {
 
                         @Override
@@ -102,7 +91,7 @@ public class MainActivityFragment extends Fragment {
                     });
 
             JsonObjectRequest jsObjRequestP2 = new JsonObjectRequest
-                    (Request.Method.GET, buildMovieUri(2, sortPreference).toString(),
+                    (Request.Method.GET, Utils.buildMovieUri(2, sortPreference).toString(),
                             (String) null, new Response.Listener<JSONObject>() {
 
                         @Override
@@ -119,7 +108,7 @@ public class MainActivityFragment extends Fragment {
                     });
 
             JsonObjectRequest jsObjRequestP3 = new JsonObjectRequest
-                    (Request.Method.GET, buildMovieUri(3, sortPreference).toString(),
+                    (Request.Method.GET, Utils.buildMovieUri(3, sortPreference).toString(),
                             (String) null, new Response.Listener<JSONObject>() {
 
                         @Override
@@ -177,11 +166,4 @@ public class MainActivityFragment extends Fragment {
         return movieList;
     }
 
-    private Uri buildMovieUri(int pageNum, String sortPreference) {
-        return Uri.parse(BASE_URL).buildUpon()
-                .appendQueryParameter("sort_by", sortPreference.concat(".desc"))
-                .appendQueryParameter("page", String.valueOf(pageNum))
-                .appendQueryParameter("api_key", API_KEY)
-                .build();
-    }
 }

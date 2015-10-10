@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,9 +37,6 @@ import java.util.ArrayList;
 
 public class DetailActivityFragment extends Fragment {
 
-    static String BASE_DETAIL_URL = "http://api.themoviedb.org/3/movie";
-    final static String YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v=";
-    static String BASE_BACKDROP_PIC_URL = "http://image.tmdb.org/t/p/w300";
     TextView title;
     TextView overview;
     TextView yearReleased;
@@ -148,7 +144,7 @@ public class DetailActivityFragment extends Fragment {
                 }
             });
 
-            String absBackdropPath = BASE_BACKDROP_PIC_URL + movieBackdropPath;
+            String absBackdropPath = Utils.BASE_BACKDROP_PIC_URL + movieBackdropPath;
             Log.v("backdrop path", absBackdropPath);
             Picasso.with(getActivity()).load(absBackdropPath).fit().into(backdrop);
 
@@ -158,16 +154,16 @@ public class DetailActivityFragment extends Fragment {
             RequestQueue requestQueue = new RequestQueue(cache, network);
             requestQueue.start();
 
-            Uri trailerUri = Uri.parse(BASE_DETAIL_URL).buildUpon()
+            Uri trailerUri = Uri.parse(Utils.BASE_DETAIL_URL).buildUpon()
                     .appendPath(String.valueOf(movieID))
                     .appendPath("videos")
-                    .appendQueryParameter("api_key", MainActivityFragment.API_KEY)
+                    .appendQueryParameter("api_key", Utils.API_KEY)
                     .build();
 
-            Uri reviewUri = Uri.parse(BASE_DETAIL_URL).buildUpon()
+            Uri reviewUri = Uri.parse(Utils.BASE_DETAIL_URL).buildUpon()
                     .appendPath(String.valueOf(movieID))
                     .appendPath("reviews")
-                    .appendQueryParameter("api_key", MainActivityFragment.API_KEY)
+                    .appendQueryParameter("api_key", Utils.API_KEY)
                     .build();
 
             JsonObjectRequest trailerRequest = new JsonObjectRequest(
@@ -197,13 +193,13 @@ public class DetailActivityFragment extends Fragment {
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Trailer trailer = trailerListAdapter.getItem(position);
                                         Intent viewTrailer = new Intent(Intent.ACTION_VIEW);
-                                        String youtubeUrl = YOUTUBE_BASE_URL.concat(String.valueOf(trailer.getKey()));
+                                        String youtubeUrl = Utils.BASE_YOUTUBE_URL.concat(String.valueOf(trailer.getKey()));
                                         viewTrailer.setData(Uri.parse(youtubeUrl));
                                         getActivity().startActivity(viewTrailer);
                                     }
                                 });
 
-                                setListViewHeightBasedOnItems(trailerListView, trailerListAdapter);
+                                Utils.setListViewHeightBasedOnItems(trailerListView, trailerListAdapter);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -278,42 +274,5 @@ public class DetailActivityFragment extends Fragment {
     }
 
 
-    /**
-     * Sets ListView height dynamically based on the height of the items.
-     *
-     * @param listView to be resized
-     * @return true if the listView is successfully resized, false otherwise
-     */
-    public static boolean setListViewHeightBasedOnItems(ListView listView, ListAdapter adapter) {
-
-        if (adapter != null) {
-
-            int numberOfItems = adapter.getCount();
-
-            // Get total height of all items.
-            int totalItemsHeight = 0;
-            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
-                View item = adapter.getView(itemPos, null, listView);
-                item.measure(0, 0);
-                totalItemsHeight += item.getMeasuredHeight();
-            }
-
-            // Get total height of all item dividers.
-            int totalDividersHeight = listView.getDividerHeight() *
-                    (numberOfItems - 1);
-
-            // Set list height.
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            params.height = totalItemsHeight + totalDividersHeight;
-            listView.setLayoutParams(params);
-            listView.requestLayout();
-
-            return true;
-
-        } else {
-            return false;
-        }
-
-    }
 }
 

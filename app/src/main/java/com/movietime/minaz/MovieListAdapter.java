@@ -62,7 +62,7 @@ public class MovieListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) row.getTag();
         }
-        Uri posterUri = Uri .parse(MainActivityFragment.BASE_PIC_URL).buildUpon()
+        Uri posterUri = Uri .parse(Utils.BASE_PIC_URL).buildUpon()
                 .appendEncodedPath(getItem(position).getPosterPath())
                 .build();
         Log.v("posterUri", posterUri.toString());
