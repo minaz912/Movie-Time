@@ -1,4 +1,4 @@
-package com.movietime.minaz;
+package com.movietime.minaz.controllers.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,30 +8,34 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.movietime.minaz.data.models.Review;
+import com.movietime.minaz.R;
+
 import java.util.ArrayList;
 
 /**
- * Created by minaz on 29/09/15.
+ * Created by minaz on 03/10/15.
  */
-public class TrailerListAdapter extends BaseAdapter {
-    Context context;
-    ArrayList<Trailer> trailerList;
-    int layoutResourceId;
+public class ReviewListAdapter extends BaseAdapter {
 
-    public TrailerListAdapter(Context context, ArrayList<Trailer> trailerList, int layoutResourceId) {
+    private Context context;
+    private ArrayList<Review> reviewList;
+    private int layoutResourceId;
+
+    public ReviewListAdapter(Context context, ArrayList<Review> reviewList, int layoutResourceId) {
         this.context = context;
-        this.trailerList = trailerList;
+        this.reviewList = reviewList;
         this.layoutResourceId = layoutResourceId;
     }
 
     @Override
     public int getCount() {
-        return trailerList.size();
+        return reviewList.size();
     }
 
     @Override
-    public Trailer getItem(int position) {
-        return trailerList.get(position);
+    public Review getItem(int position) {
+        return reviewList.get(position);
     }
 
     @Override
@@ -42,7 +46,7 @@ public class TrailerListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        final Trailer trailer = getItem(position);
+        final Review review = getItem(position);
         View row = convertView;
         ViewHolder holder;
 
@@ -54,14 +58,17 @@ public class TrailerListAdapter extends BaseAdapter {
             holder = (ViewHolder) row.getTag();
         }
 
-        holder.trailerName = (TextView) row.findViewById(R.id.movie_trailer_list_item_name);
+        holder.reviewContent = (TextView) row.findViewById(R.id.movie_review_list_item_content);
+        holder.reviewAuthor = (TextView) row.findViewById(R.id.movie_review_list_item_author);
 
-        holder.trailerName.setText(trailer.getName());
+        holder.reviewContent.setText(review.getContent());
+        holder.reviewAuthor.setText(review.getAuthor());
 
         return row;
     }
 
     private class ViewHolder {
-        TextView trailerName;
+        TextView reviewContent;
+        TextView reviewAuthor;
     }
 }

@@ -1,4 +1,4 @@
-package com.movietime.minaz;
+package com.movietime.minaz.controllers;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import com.movietime.minaz.R;
 
 public class SettingsActivity extends PreferenceActivity
         implements Preference.OnPreferenceChangeListener {

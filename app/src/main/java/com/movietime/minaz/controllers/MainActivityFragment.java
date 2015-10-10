@@ -1,4 +1,4 @@
-package com.movietime.minaz;
+package com.movietime.minaz.controllers;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +20,11 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.movietime.minaz.controllers.adapters.MovieListAdapter;
+import com.movietime.minaz.data.models.Movie;
+import com.movietime.minaz.data.MovieDataSource;
+import com.movietime.minaz.R;
+import com.movietime.minaz.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;

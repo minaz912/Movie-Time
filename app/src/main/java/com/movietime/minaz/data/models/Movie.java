@@ -1,4 +1,4 @@
-package com.movietime.minaz;
+package com.movietime.minaz.data.models;
 
 import java.util.ArrayList;
 

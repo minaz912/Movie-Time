@@ -1,4 +1,4 @@
-package com.movietime.minaz;
+package com.movietime.minaz.controllers;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -26,6 +26,14 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.movietime.minaz.controllers.adapters.ReviewListAdapter;
+import com.movietime.minaz.controllers.adapters.TrailerListAdapter;
+import com.movietime.minaz.data.models.Movie;
+import com.movietime.minaz.data.MovieDataSource;
+import com.movietime.minaz.data.models.Review;
+import com.movietime.minaz.data.models.Trailer;
+import com.movietime.minaz.R;
+import com.movietime.minaz.Utils;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;

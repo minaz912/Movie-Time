@@ -1,4 +1,4 @@
-package com.movietime.minaz;
+package com.movietime.minaz.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,9 +7,11 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.movietime.minaz.data.models.Movie;
+
 import java.util.ArrayList;
 
-import static com.movietime.minaz.MovieDbContract.MovieEntry;
+import static com.movietime.minaz.data.MovieDbContract.MovieEntry;
 
 
 public class MovieDataSource {

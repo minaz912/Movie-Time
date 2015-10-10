@@ -1,4 +1,4 @@
-package com.movietime.minaz;
+package com.movietime.minaz.data;
 
 import android.provider.BaseColumns;
 

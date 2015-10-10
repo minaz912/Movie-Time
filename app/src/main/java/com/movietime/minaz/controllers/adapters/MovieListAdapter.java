@@ -1,4 +1,4 @@
-package com.movietime.minaz;
+package com.movietime.minaz.controllers.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.movietime.minaz.controllers.MainActivity;
+import com.movietime.minaz.data.models.Movie;
+import com.movietime.minaz.R;
+import com.movietime.minaz.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

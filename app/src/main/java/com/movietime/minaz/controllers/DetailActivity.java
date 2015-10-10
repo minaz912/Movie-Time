@@ -1,9 +1,11 @@
-package com.movietime.minaz;
+package com.movietime.minaz.controllers;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.movietime.minaz.R;
 
 public class DetailActivity extends AppCompatActivity {
 

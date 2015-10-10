@@ -1,4 +1,4 @@
-package com.movietime.minaz;
+package com.movietime.minaz.data.models;
 
 /**
  * Created by minaz on 03/10/15.

@@ -11,11 +11,11 @@ public class Utils {
     //TODO: PUT YOUR API KEY HERE
     public static final String API_KEY = "XXXXXXXX";
     //
-    static String BASE_URL = "http://api.themoviedb.org/3/discover/movie";
-    static String BASE_PIC_URL = "http://image.tmdb.org/t/p/w185";
-    static String BASE_DETAIL_URL = "http://api.themoviedb.org/3/movie";
-    static String BASE_BACKDROP_PIC_URL = "http://image.tmdb.org/t/p/w300";
-    final static String BASE_YOUTUBE_URL = "https://www.youtube.com/watch?v=";
+    public static String BASE_URL = "http://api.themoviedb.org/3/discover/movie";
+    public static String BASE_PIC_URL = "http://image.tmdb.org/t/p/w185";
+    public static String BASE_DETAIL_URL = "http://api.themoviedb.org/3/movie";
+    public static String BASE_BACKDROP_PIC_URL = "http://image.tmdb.org/t/p/w300";
+    public final static String BASE_YOUTUBE_URL = "https://www.youtube.com/watch?v=";
 
     /**
      * Sets ListView height dynamically based on the height of the items.
