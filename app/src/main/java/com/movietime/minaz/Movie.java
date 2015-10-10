@@ -14,11 +14,12 @@ public class Movie {
     private String overview;
     private float voteAvg;
     private int voteCnt;
+    private String releaseDate;
 
     public Movie() {}
 
     public Movie(boolean isAdult, String backdropPath, String posterPath, ArrayList<Integer> genreIDs,
-                 int id, String language, String title, String overview, float voteAvg, int voteCnt) {
+                 int id, String language, String title, String overview, float voteAvg, int voteCnt, String releaseDate) {
         this.isAdult = isAdult;
         this.backdropPath = backdropPath;
         this.posterPath = posterPath;
@@ -29,6 +30,7 @@ public class Movie {
         this.overview = overview;
         this.voteAvg = voteAvg;
         this.voteCnt = voteCnt;
+        this.releaseDate = releaseDate;
     }
 
     public ArrayList<Integer> getGenreIDs() {
@@ -109,5 +111,13 @@ public class Movie {
 
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 }

@@ -80,6 +80,7 @@ public class MovieListAdapter extends BaseAdapter {
                 movieInfo.putString("movie_poster_path", selectedMovie.getPosterPath());
                 movieInfo.putFloat("movie_vote_avg", (float) selectedMovie.getVoteAvg());
                 movieInfo.putInt("movie_vote_cnt", selectedMovie.getVoteCnt());
+                movieInfo.putString("movie_release_date", selectedMovie.getReleaseDate());
 
                 ((MainActivity) context).onItemSelected(movieInfo);
             }

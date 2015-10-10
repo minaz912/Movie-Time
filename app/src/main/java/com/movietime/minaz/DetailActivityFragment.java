@@ -39,6 +39,8 @@ public class DetailActivityFragment extends Fragment {
     static String BASE_DETAIL_URL = "http://api.themoviedb.org/3/movie";
     TextView title;
     TextView overview;
+    TextView yearReleased;
+    TextView voteAverage;
     ImageView backdrop;
     Button markFavorite;
     LinearLayout root;
@@ -54,7 +56,7 @@ public class DetailActivityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        movieDataSource = new MovieDataSource(getActivity());
+        movieDataSource = new MovieDataSource(getContext());
     }
 
     @Override
@@ -76,6 +78,7 @@ public class DetailActivityFragment extends Fragment {
         final String moviePosterPath = movieInfo.getString("movie_poster_path", null);
         final int movieVoteCnt = movieInfo.getInt("movie_vote_cnt", 0);
         final float movieVoteAvg = movieInfo.getFloat("movie_vote_avg", 5);
+        final String movieReleaseDate = movieInfo.getString("movie_release_date", "2015");
 
 
         root = (LinearLayout) view.findViewById(R.id.movie_detail_root_linearlayout);
@@ -84,12 +87,19 @@ public class DetailActivityFragment extends Fragment {
             title = (TextView) view.findViewById(R.id.movie_detail_title);
             overview = (TextView) view.findViewById(R.id.movie_detail_overview);
             backdrop = (ImageView) view.findViewById(R.id.movie_detail_backdrop);
+            yearReleased = (TextView) view.findViewById(R.id.movie_detail_year_released);
+            voteAverage = (TextView) view.findViewById(R.id.movie_detail_vote_avg);
 
             final ListView trailerListView = (ListView) view.findViewById(R.id.movie_detail_trailers_listview);
             final ListView reviewListView = (ListView) view.findViewById(R.id.movie_detail_reviews_listview);
 
             title.setText(movieTitle);
             overview.setText(movieOverview);
+            voteAverage.setText(String.valueOf(movieVoteAvg).concat("/10"));
+
+            String releaseDate = (movieReleaseDate.contains("-")) ?
+                    movieReleaseDate.substring(0, movieReleaseDate.indexOf("-")): movieReleaseDate;
+            yearReleased.setText(releaseDate);
 
             markFavorite = (Button) view.findViewById(R.id.movie_detail_mark_favorite);
             movieDataSource.openReadable();
@@ -116,6 +126,7 @@ public class DetailActivityFragment extends Fragment {
                     movieDetails.setVoteAvg(movieVoteAvg);
                     movieDetails.setOverview(movieOverview);
                     movieDetails.setTitle(movieTitle);
+                    movieDetails.setReleaseDate(movieReleaseDate);
 
                     movieDataSource.open();
                     if (isFavorite) {

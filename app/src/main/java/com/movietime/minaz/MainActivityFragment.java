@@ -116,7 +116,8 @@ public class MainActivityFragment extends Fragment {
                         movieJson.getString("backdrop_path"), movieJson.getString("poster_path"),
                         null, movieJson.getInt("id"), movieJson.getString("original_language"),
                         movieJson.getString("title"), movieJson.getString("overview"),
-                        (float) movieJson.getDouble("vote_average"), movieJson.getInt("vote_count"));
+                        (float) movieJson.getDouble("vote_average"), movieJson.getInt("vote_count"),
+                        movieJson.getString("release_date"));
                 // convert genre_ids to integer array
                 JSONArray genreIDsJsonArray = movieJson.getJSONArray("genre_ids");
                 for (int j = 0; j < genreIDsJsonArray.length(); j++) {

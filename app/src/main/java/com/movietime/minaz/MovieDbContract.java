@@ -21,6 +21,7 @@ public class MovieDbContract {
         public static final String COLUMN_NAME_VOTE_CNT = "vote_cnt";
         public static final String COLUMN_NAME_POSTER_PATH = "poster_path";
         public static final String COLUMN_NAME_BACKDROP_PATH = "bdrop_path";
+        public static final String COLUMN_NAME_RELEASE_DATE = "release_date";
     }
 
 }

@@ -11,16 +11,15 @@ import java.util.ArrayList;
 
 import static com.movietime.minaz.MovieDbContract.MovieEntry;
 
-/**
- * Created by minaz on 09/10/15.
- */
+
 public class MovieDataSource {
     // Database fields
     private SQLiteDatabase database;
     private MovieDbHelper dbHelper;
     private String[] allColumns = { MovieEntry.COLUMN_NAME_ENTRY_ID,
             MovieEntry.COLUMN_NAME_TITLE, MovieEntry.COLUMN_NAME_OVERVIEW, MovieEntry.COLUMN_NAME_VOTE_AVG,
-            MovieEntry.COLUMN_NAME_VOTE_CNT, MovieEntry.COLUMN_NAME_BACKDROP_PATH, MovieEntry.COLUMN_NAME_POSTER_PATH};
+            MovieEntry.COLUMN_NAME_VOTE_CNT, MovieEntry.COLUMN_NAME_BACKDROP_PATH,
+            MovieEntry.COLUMN_NAME_POSTER_PATH, MovieEntry.COLUMN_NAME_RELEASE_DATE};
 
 
     public MovieDataSource(Context context) {
@@ -49,6 +48,7 @@ public class MovieDataSource {
         values.put(MovieEntry.COLUMN_NAME_VOTE_CNT, movie.getVoteCnt());
         values.put(MovieEntry.COLUMN_NAME_POSTER_PATH, movie.getPosterPath());
         values.put(MovieEntry.COLUMN_NAME_BACKDROP_PATH, movie.getBackdropPath());
+        values.put(MovieEntry.COLUMN_NAME_RELEASE_DATE, movie.getReleaseDate());
         long insertId = database.insert(MovieEntry.TABLE_NAME, null,
                 values);
         Log.d("movie database insertID", String.valueOf(insertId));
@@ -105,7 +105,8 @@ public class MovieDataSource {
         movie.setVoteAvg(cursor.getFloat(cursor.getColumnIndex(MovieEntry.COLUMN_NAME_VOTE_AVG)));
         movie.setVoteCnt(cursor.getInt(cursor.getColumnIndex(MovieEntry.COLUMN_NAME_VOTE_CNT)));
         movie.setPosterPath(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_NAME_POSTER_PATH)));
-        movie.setBackdropPath(cursor.getString(cursor.getColumnIndexOrThrow(MovieEntry.COLUMN_NAME_BACKDROP_PATH)));
+        movie.setBackdropPath(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_NAME_BACKDROP_PATH)));
+        movie.setReleaseDate(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_NAME_RELEASE_DATE)));
         return movie;
     }
     //

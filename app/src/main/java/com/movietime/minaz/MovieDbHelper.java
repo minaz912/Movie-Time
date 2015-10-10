@@ -21,6 +21,7 @@ public class MovieDbHelper extends SQLiteOpenHelper {
                     MovieEntry.COLUMN_NAME_VOTE_AVG + " REAL, " +
                     MovieEntry.COLUMN_NAME_VOTE_CNT + " INT, " +
                     MovieEntry.COLUMN_NAME_BACKDROP_PATH + " TEXT, " +
+                    MovieEntry.COLUMN_NAME_RELEASE_DATE + " TEXT, " +
                     MovieEntry.COLUMN_NAME_POSTER_PATH + " TEXT);";
 
     private static final String SQL_DELETE_ENTRIES =
