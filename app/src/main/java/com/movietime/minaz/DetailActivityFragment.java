@@ -1,5 +1,6 @@
 package com.movietime.minaz;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +39,7 @@ import java.util.ArrayList;
 public class DetailActivityFragment extends Fragment {
 
     static String BASE_DETAIL_URL = "http://api.themoviedb.org/3/movie";
+    final static String YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v=";
     TextView title;
     TextView overview;
     TextView yearReleased;
@@ -183,10 +186,22 @@ public class DetailActivityFragment extends Fragment {
                                     trailerList.add(new Trailer(trailer.getString("id"), trailer.getString("name"),
                                             trailer.getString("key")));
                                 }
-                                TrailerListAdapter trailerListAdapter = new TrailerListAdapter(getActivity(),
+                                final TrailerListAdapter trailerListAdapter = new TrailerListAdapter(getActivity(),
                                         trailerList,
                                         R.layout.trailer_list_item);
                                 trailerListView.setAdapter(trailerListAdapter);
+
+                                trailerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        Trailer trailer = trailerListAdapter.getItem(position);
+                                        Intent viewTrailer = new Intent(Intent.ACTION_VIEW);
+                                        String youtubeUrl = YOUTUBE_BASE_URL.concat(String.valueOf(trailer.getKey()));
+                                        viewTrailer.setData(Uri.parse(youtubeUrl));
+                                        getActivity().startActivity(viewTrailer);
+                                    }
+                                });
+
                                 setListViewHeightBasedOnItems(trailerListView, trailerListAdapter);
                             } catch (JSONException e) {
                                 e.printStackTrace();
