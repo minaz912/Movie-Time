@@ -73,13 +73,18 @@ public class MainActivityFragment extends Fragment {
             RequestQueue mRequestQueue = new RequestQueue(cache, network);
             mRequestQueue.start();
 
+            final ArrayList<Movie> movies = new ArrayList<>();
+            MovieListAdapter adapter = new MovieListAdapter(getActivity(), movies,
+                    R.layout.movie_list_item);
+
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.GET, movieListUri.toString(), (String) null, new Response.Listener<JSONObject>() {
+                    (Request.Method.GET, buildMovieUri(1, sortPreference).toString(),
+                            (String) null, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.v("RESPONSE", response.toString());
-                            ArrayList<Movie> movies = parseJsonResponse(response);
+                            movies.addAll(parseJsonResponse(response));
 
                             MovieListAdapter adapter = new MovieListAdapter(getActivity(), movies,
                                     R.layout.movie_list_item);
@@ -93,7 +98,43 @@ public class MainActivityFragment extends Fragment {
                         }
                     });
 
+            JsonObjectRequest jsObjRequestP2 = new JsonObjectRequest
+                    (Request.Method.GET, buildMovieUri(2, sortPreference).toString(),
+                            (String) null, new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.v("RESPONSE", response.toString());
+                            movies.addAll(parseJsonResponse(response));
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.v("RESPONSE", error.toString());
+                        }
+                    });
+
+            JsonObjectRequest jsObjRequestP3 = new JsonObjectRequest
+                    (Request.Method.GET, buildMovieUri(3, sortPreference).toString(),
+                            (String) null, new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.v("RESPONSE", response.toString());
+                            movies.addAll(parseJsonResponse(response));
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.v("RESPONSE", error.toString());
+                        }
+                    });
+
             mRequestQueue.add(jsObjRequest);
+            mRequestQueue.add(jsObjRequestP2);
+            mRequestQueue.add(jsObjRequestP3);
         } else {
             movieDataSource = new MovieDataSource(getActivity());
             movieDataSource.openReadable();
@@ -131,5 +172,13 @@ public class MainActivityFragment extends Fragment {
             e.printStackTrace();
         }
         return movieList;
+    }
+
+    private Uri buildMovieUri(int pageNum, String sortPreference) {
+        return Uri.parse(BASE_URL).buildUpon()
+                .appendQueryParameter("sort_by", sortPreference.concat(".desc"))
+                .appendQueryParameter("page", String.valueOf(pageNum))
+                .appendQueryParameter("api_key", "81513cb04a6f257d51c40a4b89653f13")
+                .build();
     }
 }
