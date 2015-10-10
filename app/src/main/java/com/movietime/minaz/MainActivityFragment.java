@@ -31,6 +31,9 @@ import java.util.ArrayList;
 
 public class MainActivityFragment extends Fragment {
 
+    //TODO: PUT YOUR API KEY HERE
+    public static final String API_KEY = "XXXXXXXX";
+    //
     static String BASE_URL = "http://api.themoviedb.org/3/discover/movie";
     static String BASE_PIC_URL = "http://image.tmdb.org/t/p/w185";
     GridView movieGridView;
@@ -64,7 +67,7 @@ public class MainActivityFragment extends Fragment {
 
             Uri movieListUri = Uri.parse(BASE_URL).buildUpon()
                     .appendQueryParameter("sort_by", sortPreference.concat(".desc"))
-                    .appendQueryParameter("api_key", "81513cb04a6f257d51c40a4b89653f13")
+                    .appendQueryParameter("api_key", API_KEY)
                     .build();
 
             Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024 * 10);
@@ -178,7 +181,7 @@ public class MainActivityFragment extends Fragment {
         return Uri.parse(BASE_URL).buildUpon()
                 .appendQueryParameter("sort_by", sortPreference.concat(".desc"))
                 .appendQueryParameter("page", String.valueOf(pageNum))
-                .appendQueryParameter("api_key", "81513cb04a6f257d51c40a4b89653f13")
+                .appendQueryParameter("api_key", API_KEY)
                 .build();
     }
 }

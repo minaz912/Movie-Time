@@ -161,13 +161,13 @@ public class DetailActivityFragment extends Fragment {
             Uri trailerUri = Uri.parse(BASE_DETAIL_URL).buildUpon()
                     .appendPath(String.valueOf(movieID))
                     .appendPath("videos")
-                    .appendQueryParameter("api_key", "81513cb04a6f257d51c40a4b89653f13")
+                    .appendQueryParameter("api_key", MainActivityFragment.API_KEY)
                     .build();
 
             Uri reviewUri = Uri.parse(BASE_DETAIL_URL).buildUpon()
                     .appendPath(String.valueOf(movieID))
                     .appendPath("reviews")
-                    .appendQueryParameter("api_key", "81513cb04a6f257d51c40a4b89653f13")
+                    .appendQueryParameter("api_key", MainActivityFragment.API_KEY)
                     .build();
 
             JsonObjectRequest trailerRequest = new JsonObjectRequest(
