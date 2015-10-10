@@ -40,6 +40,7 @@ public class DetailActivityFragment extends Fragment {
 
     static String BASE_DETAIL_URL = "http://api.themoviedb.org/3/movie";
     final static String YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v=";
+    static String BASE_BACKDROP_PIC_URL = "http://image.tmdb.org/t/p/w300";
     TextView title;
     TextView overview;
     TextView yearReleased;
@@ -147,10 +148,9 @@ public class DetailActivityFragment extends Fragment {
                 }
             });
 
-
-            String absBackdropPath = MainActivityFragment.BASE_PIC_URL + movieBackdropPath;
+            String absBackdropPath = BASE_BACKDROP_PIC_URL + movieBackdropPath;
             Log.v("backdrop path", absBackdropPath);
-            Picasso.with(getActivity()).load(absBackdropPath).into(backdrop);
+            Picasso.with(getActivity()).load(absBackdropPath).fit().into(backdrop);
 
             Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024 * 10);
             Network network = new BasicNetwork(new HurlStack());
