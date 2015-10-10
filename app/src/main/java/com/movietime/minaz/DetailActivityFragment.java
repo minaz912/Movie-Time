@@ -149,7 +149,8 @@ public class DetailActivityFragment extends Fragment {
 
 
             String absBackdropPath = MainActivityFragment.BASE_PIC_URL + movieBackdropPath;
-            Picasso.with(getActivity()).load(absBackdropPath).fit().into(backdrop);
+            Log.v("backdrop path", absBackdropPath);
+            Picasso.with(getActivity()).load(absBackdropPath).into(backdrop);
 
             Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024 * 10);
             Network network = new BasicNetwork(new HurlStack());
