@@ -3,7 +3,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_detail">Movie Details</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
@@ -29,5 +29,5 @@
     <string name="movie_detail_set_as_favorite">SET AS FAVORITE</string>
     <string name="movie_detail_remove_from_favorites">REMOVE FROM FAVORITES</string>
     <string name="pref_show_fav_title">Only show favorite movies</string>
-    <string name="pref_show_fav">show_fav</string>
+    <string name="pref_show_fav_key">show_fav</string>
 </resources>

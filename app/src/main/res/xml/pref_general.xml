@@ -13,7 +13,7 @@
         android:entryValues="@array/pref_sort_by_values" />
 
     <CheckBoxPreference
-        android:key="@string/pref_show_fav"
+        android:key="@string/pref_show_fav_key"
         android:title="@string/pref_show_fav_title"
         android:defaultValue="false" />
 

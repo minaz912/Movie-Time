@@ -56,7 +56,7 @@ public class MainActivityFragment extends Fragment {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
 
-        boolean showFavsOnly = sharedPreferences.getBoolean(getString(R.string.pref_show_fav), false);
+        boolean showFavsOnly = sharedPreferences.getBoolean(getString(R.string.pref_show_fav_key), false);
 
         if (! showFavsOnly) {
             String sortPreference = sharedPreferences.getString(
